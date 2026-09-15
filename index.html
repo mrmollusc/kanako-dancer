@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+      .sprite-container {
+      width: 200px;
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #pats {
+      position: absolute;
+      bottom: -10%;
+      color:white;
+    }
+
+    img {
+      position: absolute;
+      width: 100%;
+      top: -25%;
+    }
+  </style>
+</head>
+<body>
+    <div class="sprite-container">
+        <img src="dancer.gif" alt="Dancing Sprite">
+    </div>
+    <p id="pats">Pats delivered:</p>
+    <script>
+      const text = document.getElementById('pats')
+let pats = 0;
+
+    setInterval(() => {
+        pats++;
+    text.innerHTML = 'Pats delivered: '+ pats;
+
+    }, 1000);
+    
+
+
+    </script>
+</body>
+</html>
