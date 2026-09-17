@@ -2,6 +2,7 @@
 <html>
 <head>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Mozilla+Text:wght@200..700&display=swap');
     body {
       margin: 0;
       padding: 0;
@@ -21,23 +22,45 @@
     }
 
     #pats {
+      font-family: 'Mozilla Text';
       position: absolute;
-      bottom: -10%;
-      color:white;
+      bottom: -10.5%;
+      color: rgb(20, 20, 20);
+      background: rgba(255, 255, 255, 0.6); 
+      backdrop-filter: blur(12px);
+      border-radius: 4px;
+      padding: 4px 4px 4px 4px;
+      border: none;
+      font-weight: 500;
+      user-select: none; 
     }
-
+      
     img {
       position: absolute;
       width: 100%;
       top: -25%;
+      background: transparent;
+      -webkit-user-drag: none;
+      user-select: none;
     }
+
+    #everything {
+      opacity: 1;
+      transition: opacity 0.3s cubic-bezier(.28,.71,.32,1);
+    }
+
+    #everything:hover {
+      opacity: 0.1;
+    }
+
   </style>
 </head>
-<body>
+<body id="everything">
     <div class="sprite-container">
         <img src="dancer.gif" alt="Dancing Sprite">
     </div>
-    <p id="pats">Pats delivered:</p>
+    <p id="pats">Pats delivered: 0</p>
+
     <script>
       const text = document.getElementById('pats')
 let pats = 0;

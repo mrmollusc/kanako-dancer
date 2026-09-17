@@ -1,4 +1,4 @@
-const { app, BrowserWindow, screen } = require('electron');
+const { app, BrowserWindow, screen} = require('electron');
 
 let mainWindow;
 
@@ -39,7 +39,7 @@ function createWindow() {
 
   mainWindow.loadFile('index.html');
 
-  mainWindow.setIgnoreMouseEvents(true, { forward: true });
+  mainWindow.setIgnoreMouseEvents(false, { forward: true });
 }
 
 app.whenReady().then(() => {
