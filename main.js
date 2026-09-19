@@ -1,4 +1,5 @@
 const { app, BrowserWindow, screen} = require('electron');
+const { uIOhook } = require('uiohook-napi');
 
 let mainWindow;
 
@@ -7,9 +8,6 @@ const winHeight = 150;
 
 let posX;
 let posY;
-let xDir = -1;
-let yDir = -1;
-const speed = 2;
 
 
 function createWindow() {
@@ -22,6 +20,7 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     x: Math.round(posX),
     y: Math.round(posY),
+    icon: __dirname + '/icon.ico',
     width: winWidth,    
     height: winHeight,       
     transparent: true, 
@@ -33,14 +32,30 @@ function createWindow() {
     fullscreenable: false,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false
+      contextIsolation: false,
+      sandbox: false
     }
   });
 
   mainWindow.loadFile('index.html');
 
-  mainWindow.setIgnoreMouseEvents(false, { forward: true });
+  mainWindow.setIgnoreMouseEvents(true, { forward: true });
+  uIOhook.on('mousemove', (e) => {
+    const bounds = mainWindow.getBounds();
+
+    const scale = screen.getDisplayMatching(bounds).scaleFactor;
+    
+    const isHovering = 
+      e.x >= bounds.x * scale && 
+      e.x <= (bounds.x + bounds.width) * scale && 
+      e.y >= bounds.y * scale && 
+      e.y <= (bounds.y + bounds.height) * scale;
+
+    mainWindow.webContents.send('hovering', isHovering);
+  });
+  uIOhook.start();
 }
+
 
 app.whenReady().then(() => {
   createWindow();
@@ -51,5 +66,6 @@ app.whenReady().then(() => {
 });
 
 app.on('window-all-closed', () => {
+  uIOhook.stop();
   if (process.platform !== 'darwin') app.quit();
 });
